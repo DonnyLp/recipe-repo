@@ -5,11 +5,10 @@ frontend package dependencies - frontend/recipe-repository/package.json:
         nodejs
         npm
         npx
-
         bootstrap
         axios
         react-router-dom
-
     run commands:
         cd frontend
         npm start
+
