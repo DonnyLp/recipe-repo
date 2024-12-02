@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Route, createBrowserRouter, RouterProvider, createRoutesFromElements } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // For Bootstrap's JavaScript
 
 //Page Imports
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
+import CommunityGuidelines from './pages/CommunityGuidelines';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,6 +25,8 @@ const router = createBrowserRouter(
       <Route path='/Login' element={<Login />}/>
       <Route path='/SignUp' element={<SignUp />}/>
       <Route path='/Home' element={<Home />}/>
+      <Route path='/Profile' element={<Profile />}/>
+      <Route path='/CommunityGuidelines' element={<CommunityGuidelines />}/>
     </>
   )
 )

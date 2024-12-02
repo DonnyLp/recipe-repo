@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+
+.navbar-search {
+  display: flex;
+  width: 1000px;
+}
+
+.navbar-home {
+  margin-left: 15px;
+}
+
+.navbar-profile {
+  margin-right: 15px;
+}
+
+.dropdown {
+  position: relative;
+  overflow: visible;
+}
+
+.dropdown-menu {
+  z-index: 1050;
+  position: absolute;
+  left: 0;
+  right: auto;
+}
