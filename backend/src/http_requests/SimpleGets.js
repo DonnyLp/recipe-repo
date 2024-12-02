@@ -1,44 +1,50 @@
-import App from "../App.js";
-import Recipe from "../schemas/recipe/Recipe";
-import Ingredient from "../schemas/recipe/Ingredient";
-import RecipeRating from "../schemas/recipe/RecipeRating";
-import User from "../schemas/account/User";
-import SavedRecipe from "../schemas/account/SavedRecipe";
-import Admin from "../schemas/account/Admin";
+import express from "express";
+import Recipe from "../schemas/recipe/Recipe.js";
+import Ingredient from "../schemas/recipe/Ingredient.js";
+import RecipeRating from "../schemas/recipe/RecipeRating.js";
+import User from "../schemas/account/User.js";
+import SavedRecipe from "../schemas/account/SavedRecipe.js";
+import Admin from "../schemas/account/Admin.js";
+
+const router = express.Router();
 
 export const handleGet = (schema) => {
     return async (req, res) => {
         try {
-            const data = await schema.findById(req.query.id).exec();
+            const id = req.query._id;
+            if (!id) {
+                res.status(400).send({ message: "Missing 'id' query parameter" });
+                return;
+            }
+            const data = await schema.findById(id).exec();
             if (!data) {
-                res.status(404).send({ message: 'Data not found' });
+                res.status(404).send({ message: "Data not found" });
                 return;
             }
             let sanitizedData = data.toObject();
             switch (schema.modelName) {
-                case 'User':
+                case "User":
                     console.log(`GET ${schema.modelName}:\n${sanitizedData.email}`);
                     delete sanitizedData.password_hash;
-                break;
+                    break;
                 default:
                     console.log(`GET ${schema.modelName}:\n${sanitizedData}`);
-                break;
+                    break;
             }
+
             res.send(sanitizedData);
         } catch (error) {
-            console.error('Error retrieving data:', error);
+            console.error("Error retrieving data:", error);
             res.status(500).send(error);
         }
     };
 };
 
+router.get(`/getRecipes`, handleGet(Recipe));
+router.get(`/getIngredient`, handleGet(Ingredient));
+router.get(`/getRating`, handleGet(RecipeRating));
+router.get(`/getUser`, handleGet(User));
+router.get(`/getSavedRecipe`, handleGet(SavedRecipe));
+router.get(`/getAdmin`, handleGet(Admin));
 
-App.get(`/getRecipe`,handleGet(Recipe));
-App.get(`/getIngredient`,handleGet(Ingredient));
-App.get(`/getRating`,handleGet(RecipeRating));
-App.get(`/getUser`,handleGet(User));
-App.get(`/getSavedRecipe`,handleGet(SavedRecipe));
-App.get(`/getAdmin`,handleGet(Admin));
-
-
-
+export default router;
