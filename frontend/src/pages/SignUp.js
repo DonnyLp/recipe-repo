@@ -12,9 +12,20 @@ const SignUp = () => {
     const handleSubmit = async(event, username, password, email) => {
         event.preventDefault();
 
-        navigate('/Home'); //temporary until we can get user signup up and running
-
         //axios post for user signup and verification
+        try {
+            const res = await axios.post('http://localhost:9000/createUser', { username, password, email })
+                .catch((err) => {
+                    alert("Error in signing up");
+                });
+            if(res.status == 201) {
+                navigate('/Login');
+            } else {
+                alert("User already exists");
+            }
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     return (

@@ -15,6 +15,7 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile';
 import CommunityGuidelines from './pages/CommunityGuidelines';
 import PostRecipeForm from './pages/PostRecipeForm';
+import AdminHome from './pages/AdminHome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path='/Profile' element={<Profile />}/>
       <Route path='/CommunityGuidelines' element={<CommunityGuidelines />}/>
       <Route path='/PostRecipeForm' element={<PostRecipeForm />}/>
+      <Route path='/AdminHome' element={<AdminHome />}/>
     </>
   )
 )

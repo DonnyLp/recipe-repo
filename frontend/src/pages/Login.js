@@ -12,9 +12,27 @@ const Login = () => {
     const handleSubmit = async(event, username, password) => {
         event.preventDefault();
 
-        navigate('/Home'); //temporary until we can get user verification up and running
-
         //axios post for user verification
+        try {
+            const res = await axios.post('http://localhost:9000/getUser', { username, password })
+                .catch((err) => {
+                    alert("Error in logging in");
+                });
+            if(res.status == 400) { //invalid username or password
+                alert("Username or Password is incorrect");
+            } else if (res.status == 202) { //Use admin login route
+                localStorage.clear();
+                localStorage.setItem('loggedInUser', username);
+                navigate('/AdminHome');
+            } else { //Use normal login route
+                localStorage.clear();
+                localStorage.setItem('loggedInUser', username);
+                navigate('/Home');
+            }
+            
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     return (
