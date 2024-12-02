@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
+import CommunityGuidelines from './pages/CommunityGuidelines';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path='/Login' element={<Login />}/>
         <Route path='/SignUp' element={<SignUp />}/>
         <Route path='/Home' element={<Home />}/>
+        <Route path='/Profile' element={<Profile />}/>
+        <Route path='/CommunityGuidelines' element={<CommunityGuidelines />}/>
       </Routes>
     </BrowserRouter>
   );

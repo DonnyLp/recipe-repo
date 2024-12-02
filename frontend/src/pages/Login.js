@@ -32,7 +32,7 @@ const Login = () => {
                             required                        
                         />
                     </li>
-                        <button onClick={() => navigate('/Home')}>
+                        <button type="button" class="btn btn-primary" onClick={() => navigate('/Home')}>
                             Login
                         </button>
                     <li>
