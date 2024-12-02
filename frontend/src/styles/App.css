@@ -40,3 +40,15 @@
   left: 0;
   right: auto;
 }
+
+.postRecipeBanner {
+  display: flex;
+  justify-content: end;
+  margin: 5px 5px 0px 0px;
+}
+
+.postRecipeButton {
+  outline-style: auto;
+  outline-color: grey;
+  outline-width: 1px;
+}

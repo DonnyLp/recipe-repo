@@ -15,7 +15,7 @@ export const Navbar = () => {
                 </div>  
             </a>
             <div className="navbar-search">
-                <input className="form-control" type="search" placeholder="Search Recipes..." aria-label="Search" />
+                <input className="form-control" type="search" placeholder="Search Recipes..." aria-label="Search" style={{margin: '0px 5px 0px 0px'}} />
                 <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
             </div>
             <div className="navbar-profile nav-item dropdown"> {/* Dropdown Menu Begin Here */}
