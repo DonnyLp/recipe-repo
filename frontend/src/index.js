@@ -11,7 +11,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // For Bootstrap's JavaScrip
 //Page Imports
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import Profile from './pages/Profile';
 import CommunityGuidelines from './pages/CommunityGuidelines';
 import PostRecipeForm from './pages/PostRecipeForm';
