@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUp = () => {
@@ -7,15 +7,22 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = async(event, username, password, email) => {
         event.preventDefault();
 
         //axios post for user signup and verification
         try {
-            axios.post('http://localhost:9000/createUser', { username, password, email })
+            const res = await axios.post('http://localhost:9000/createUser', { username, password, email })
                 .catch((err) => {
                     alert("Error in signing up");
                 });
+            if(res.status == 201) {
+                navigate('/Login');
+            } else {
+                alert("User already exists");
+            }
         } catch(err) {
             console.log(err);
         }
