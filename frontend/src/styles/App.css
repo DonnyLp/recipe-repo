@@ -2,6 +2,20 @@
   text-align: center;
 }
 
+.loginContainer {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 10%;
+}
+
+.signupContainer {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 10%;
+}
+
 .navbar-search {
   display: flex;
   width: 1000px;

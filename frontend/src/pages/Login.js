@@ -1,46 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
 const Login = () => {
-
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    
     const navigate = useNavigate();
 
+    const handleSubmit = async(event, username, password) => {
+        event.preventDefault();
+
+        navigate('/Home'); //temporary until we can get user verification up and running
+
+        //axios post for user verification
+    }
+
     return (
-        <div>
-            Login Page
+        <div className="loginContainer">
             <form>
-                <ul>
-                    <li>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Username"
-
-
-                            required
-                        />
-                    </li>
-                    <li>
-                        <input
-                            type="password"
-                            className="form-control"
-                            placeholder="Password"
-
-
-                            required                        
-                        />
-                    </li>
-                        <button type="button" class="btn btn-primary" onClick={() => navigate('/Home')}>
-                            Login
-                        </button>
-                    <li>
-                        <label>Don't have account? <Link to="/SignUp">SignUp</Link></label>
-                    </li>
-                </ul>
+                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                    <input
+                        type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required                        
+                    />
+                </div>
+                <div className="form-group">
+                    <button 
+                    type="button" 
+                    className="btn btn-primary" 
+                    onClick={(event) => handleSubmit(event, username, password)}
+                    >
+                    Login
+                    </button>
+                </div>
+                
+                <label>Don't have account? <Link to="/SignUp">SignUp</Link></label>
             </form>
-            
         </div>
     );
 }
