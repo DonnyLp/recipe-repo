@@ -9,23 +9,24 @@ const PostRecipeForm = () => {
     const [cuisineType, setCuisineType] = useState('');
     const [prep_time, setPrepTime] = useState('');
     const [cook_time, setCookTime] = useState('');
+    const user = JSON.parse(localStorage.getItem('loggedInUser'));
 
     const navigate = useNavigate();
 
     const handleSubmit = async(event, recipe_name, instructions, ingredients, cuisineType, prep_time, cook_time) => {
         event.preventDefault();
         const recipe = {
+            user_id: user._id,
             recipe_name: recipe_name,
             instructions: instructions,
-            ingredients: ingredients,
-            cuisineType: cuisineType,
-            prep_time: prep_time,
-            cook_time: cook_time
+            cuisine_type: cuisineType,
+            preparation_time: prep_time,
+            cooking_time: cook_time
         };
+            console.log("recipe",recipe)
 
         try {
             const response = await axios.post('http://localhost:9000/submitRecipe', recipe);
-            console.log(response);
         } catch(error) {
             console.error(error);
         }
@@ -99,7 +100,7 @@ const PostRecipeForm = () => {
                     <button className="btn btn-secondary" onClick={(e) => {navigate('/Home')}}>
                         Cancel
                     </button>
-                    <button className="btn btn-primary" onClick={(event) => handleSubmit(event, recipe_name, instructions, ingredients, prep_time, cook_time)}>
+                    <button className="btn btn-primary" onClick={(event) => handleSubmit(event, recipe_name, instructions, ingredients, cuisineType,prep_time, cook_time)}>
                         Submit
                     </button>
                 </div>

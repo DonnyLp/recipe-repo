@@ -91,6 +91,9 @@ const requireId = async (req, res) => {
 
 
 export const handleGetList = (schema) => {
+
+
+
   return async (req, res) => {
     try {
       console.log("GET for ", schema.constructor.name)
@@ -100,6 +103,7 @@ export const handleGetList = (schema) => {
         response.push(Object.values(object));
       }
       res.send(response);
+      console.log(response);
     } catch (error) {
       console.error("Error retrieving data: ", error);
       res.status(500).send(error);
@@ -108,33 +112,35 @@ export const handleGetList = (schema) => {
 };
 
 
+
+
+
 export const handleGetFrom = (requestedSchema, fromSchema) => {
   return async (req, res) => {
     try {
-      console.log(`GET for ${requestedSchema.constructor.name} from ${fromSchema.constructor.name}`)
+      console.log(`GET for ${requestedSchema.modelName} from ${fromSchema.modelName}`)
       let found_objects;
       let response = [];
 
       switch (fromSchema) {
         case User:
-          found_objects = requestedSchema.find({user_id: req.body._id});
+          found_objects = await requestedSchema.findById(req.query._id);
           break;
         case Recipe:
-          found_objects = requestedSchema.find({recipe_id: req.body._id});
+          console.log(req.query._id);
+          found_objects = await requestedSchema.findById(req.query._id);
+          response.push(found_objects);
           break;
         case Report:
-          found_objects = requestedSchema.find({report_id: req.body._id});
+          found_objects = await requestedSchema.find({report_id: req.body._id});
           break;
         case Ingredient:
-          found_objects = requestedSchema.find({ingredient_id: req.body._id});
+          found_objects = await requestedSchema.find({ingredient_id: req.body._id});
           break;
         default:
           throw new Error("requested fromSchema is not supported/needed!");
       }
-
-      for (const object of found_objects) {
-        response.push(Object.values(object));
-      }
+      // console.log(response, found_objects);
       res.send(response);
     } catch (error) {
       console.error("Error retrieving data: ", error);
@@ -161,9 +167,17 @@ router.get(`/getReports`, handleGetList(Report));
 
 // gets elements referenced from another
 router.get(`/getRatingsFromUser`, handleGetFrom(RecipeRating, User));
+router.get(`/getUsersFromRecipe`, handleGetFrom(User, Recipe));
 router.get(`/getSavedRecipesFromUser`, handleGetFrom(SavedRecipe, User));
 router.get(`/getReportedUserFromRating`, handleGetFrom(ReportedUser, Report));
 router.get(`/getReportedRatingFromRating`, handleGetFrom(ReportedRating, Report));
 router.get(`/getReportedRecipeFromRating`, handleGetFrom(ReportedRecipe, Report));
+
+
+
+
+
+
+
 
 export default router;

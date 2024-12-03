@@ -7,6 +7,7 @@ import SavedRecipe from "../schemas/account/SavedRecipe.js";
 import Admin from "../schemas/account/Admin.js";
 import ReportedUser from "../schemas/report/ReportedUser.js";
 import { HashPassword } from "../Util/Util.js";
+import mongoose, { mongo } from "mongoose";
 
 
 const router = express.Router();
@@ -14,6 +15,7 @@ const router = express.Router();
 export const handleCreate = (schema) => {
   return async (req, res) => {
     try {
+      console.log(`POST ${schema.modelName}:\n${req.body}`);
       switch (schema.modelName) {
         case "Report":
           await handleReport(data);
@@ -23,7 +25,13 @@ export const handleCreate = (schema) => {
           req.body.password_hash = hashedPassword;
           console.log(`POST ${schema.modelName}:\n${req.body.email}`);
           break;
+        case "Recipe":
+          req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
+          req.body.preparation_time = new mongoose.Schema.Types.Number().cast(req.body.preparation_time);
+          req.body.cooking_time = new mongoose.Schema.Types.Number().cast(req.body.cooking_time);
+          break;
       }
+      
       const data = new schema(req.body);
       await data.save();
 

@@ -7,7 +7,7 @@ const RecipeSchema = new mongoose.Schema({
   date_created: mongoose.Schema.Types.Date,
   cuisine_type: String,
   preparation_time: Number,
-  cooking_time: Number
+  cooking_time: Number,  
 });
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);

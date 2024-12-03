@@ -24,11 +24,12 @@ const Login = () => {
                 alert("Username or Password is incorrect");
             } else if (res.status === 202) { //Use admin login route
                 localStorage.clear();
-                localStorage.setItem('loggedInUser', username);
+                localStorage.setItem('loggedInUser', JSON.stringify(res.data));
                 navigate('/AdminHome');
             } else { //Use normal login route
+                console.log(res.data);
                 localStorage.clear();
-                localStorage.setItem('loggedInUser', username);
+                localStorage.setItem('loggedInUser', JSON.stringify(res.data));
                 navigate('/Home');
             }
             
