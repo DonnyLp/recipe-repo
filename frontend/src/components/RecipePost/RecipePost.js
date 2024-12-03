@@ -2,11 +2,11 @@ import React from 'react';
 import './RecipePost.scss';
 import axios from 'axios';
 export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, userId}) => {
-    
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
     const handleSave =  async () => {
         const savedRecipe = {
             recipe_id: recipeId,
-            user_id: userId
+            user_id:user._id 
         };
         try {
             const response = await axios.post('http://localhost:9000/saveRecipe', savedRecipe);

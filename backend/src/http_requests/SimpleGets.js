@@ -121,12 +121,23 @@ export const handleGetFrom = (requestedSchema, fromSchema) => {
 
       switch (fromSchema) {
         case User:
-          found_objects = await requestedSchema.findById(req.query._id);
+          if(requestedSchema === SavedRecipe){
+              const savedRecipes = await requestedSchema.find({user_id: req.query.user_id});
+              const recipeIds = savedRecipes.map(savedRecipe => savedRecipe.recipe_id);
+              found_objects = await Recipe.find({ _id: { $in: recipeIds } });
+              response.push(found_objects);
+              console.log("sdfsfdds",found_objects);
+          }else{
+            found_objects = await requestedSchema.findById(req.query._id);
+          }
           break;
         case Recipe:
           console.log(req.query._id);
           found_objects = await requestedSchema.findById(req.query._id);
           response.push(found_objects);
+          break;
+        case SavedRecipe:
+          found_objects = await requestedSchema.find({user_id: req.query._id});
           break;
         case Report:
           found_objects = await requestedSchema.find({report_id: req.body._id});
