@@ -6,16 +6,14 @@ import { Navbar } from '../components/Navbar';
 const VerifiedApplication = () => {
   const [applicationText, setApplicationText] = useState('');
   const navigate = useNavigate();
-  const username = 'currentUsername'; 
+  const user = JSON.parse(localStorage.getItem('loggedInUser'));
 
   const handleSubmit = async () => {
     try {
-      await axios.post('/VerificationApplication', {
-        username,
-        application_text: applicationText
+      await axios.post('http://localhost:9000/submitVerification', { 
+        user_id: user._id, description: applicationText 
       });
       alert('Application submitted successfully!');
-      navigate('/home');
     } catch (error) {
       console.error('Error submitting application:', error);
       alert('Failed to submit application.');

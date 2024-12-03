@@ -27,6 +27,7 @@ const Home = () => {
                         });
                         console.log('User response:', userResponse);
                         recipe[2].user_name = userResponse.data[0].username;
+                        recipe[2].status = userResponse.data[0].status;
                     } catch (error) {
                         console.error('Error fetching user:', error);
                         return null; 
@@ -57,7 +58,7 @@ const Home = () => {
                         recipeName={recipe[2].recipe_name} 
                         hours={recipe[2].preperation_time} 
                         minutes={recipe[2].cooking_time}
-                        verified={recipe[2].verified}
+                        verified={recipe[2].status}
                         recipeId={recipe[2]._id}
                         userId={recipe[2].user_id}
                         saves={recipe[2].saves}

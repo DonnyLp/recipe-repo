@@ -10,6 +10,7 @@ import ReportedUser from "../schemas/report/ReportedUser.js";
 import ReportedRating from "../schemas/report/ReportedRating.js";
 import ReportedRecipe from "../schemas/report/ReportedRecipe.js";
 import { ComparePassword} from "../Util/Util.js";
+import Verification from "../schemas/account/Verification.js";
 
 const router = express.Router();
 
@@ -96,6 +97,7 @@ export const handleGetList = (schema) => {
       console.log("GET for ", schema.constructor.name)
       const found_objects = await schema.find();
       let response = [];
+      console.log(found_objects);
       for (const object of found_objects) {
         response.push(Object.values(object));
       }
@@ -155,7 +157,31 @@ export const handleGetFrom = (requestedSchema, fromSchema) => {
       res.status(500).send(error);
     }
   };
-}; // requestedSchema is what kind of object you want and fromSchema is what object your trying to get it from
+};
+
+
+function handleGetUserById(schema) {
+  return async (req, res) => {
+    try {
+      console.log(`GET for ${schema.modelName} from User`)
+      const user_id = req.query._id;
+      if (!user_id) {
+        res.status(400).send({ message: "Missing 'user_id' query parameter" });
+        return;
+      }
+      let found_objects = await schema.findById(user_id);
+      found_objects.password_hash = undefined;
+      res.send(found_objects);
+    } catch (error) {
+      console.error("Error retrieving data: ", error);
+      res.status(500).send(error);
+    }
+  };
+}
+
+
+
+// requestedSchema is what kind of object you want and fromSchema is what object your trying to get it from
 //    for example getting all of a user's ratings would be
 //    handleGetFrom(requestedSchema: RecipeRating, fromSchema: User)
 //    and then the code will try to find all RecipeRatings with the user_id of the _id in the req.body
@@ -172,6 +198,7 @@ router.get(`/getUsers`, handleGetList(User));
 router.get(`/getIngredients`, handleGetList(Ingredient));
 router.get(`/getRecipes`, handleGetList(Recipe));
 router.get(`/getReports`, handleGetList(Report));
+router.get(`/getVerifications`, handleGetList(Verification));
 
 // gets elements referenced from another
 router.get(`/getRatingsFromUser`, handleGetFrom(RecipeRating, User));
@@ -180,6 +207,11 @@ router.get(`/getSavedRecipesFromUser`, handleGetFrom(SavedRecipe, User));
 router.get(`/getReportedUserFromRating`, handleGetFrom(ReportedUser, Report));
 router.get(`/getReportedRatingFromRating`, handleGetFrom(ReportedRating, Report));
 router.get(`/getReportedRecipeFromRating`, handleGetFrom(ReportedRecipe, Report));
+
+
+
+// not following paradigm of get requests
+router.get(`/getUserById`, handleGetUserById(User));
 
 
 

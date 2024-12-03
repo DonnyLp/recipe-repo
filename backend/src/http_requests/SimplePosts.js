@@ -8,6 +8,7 @@ import Admin from "../schemas/account/Admin.js";
 import ReportedUser from "../schemas/report/ReportedUser.js";
 import { HashPassword } from "../Util/Util.js";
 import mongoose, { mongo } from "mongoose";
+import Verification from "../schemas/account/Verification.js";
 
 
 const router = express.Router();
@@ -40,6 +41,10 @@ export const handleCreate = (schema) => {
             return;
           }
           await incrementSaves(req.body.recipe_id);
+          break;
+        case "Verification":
+          console.log("Verification", req.body);
+          req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
           break;
       }
 
@@ -78,7 +83,48 @@ async function handleReport(report) {
   }
 }
 
+function handleApprove() {
+  return async (req, res) => {
+    try {
+      console.log(req.body);
+      const user = await User.findById(req.body._id );
+      console.log(user);
+      if (!user) {
+        return res.status(400).send("User not found");
+      }
 
+      user.status = true;
+      await user.save();
+
+      await Verification.deleteMany({ user_id: user._id });
+
+      res.status(200).send("User approved and verifications deleted");
+    } catch (error) {
+      console.error("Error in handleApprove:", error);
+      res.status(500).send("Internal server error");
+    }
+  };
+}
+
+function handleVerificationDelete() {
+  return async (req, res) => {
+    try {
+
+      const deletedVerification = await Verification.deleteMany({ user_id:req.body._id});
+
+      if (!deletedVerification) {
+        return res.status(404).send("Verification not found");
+      }
+
+      
+      console.log("Verification deleted:", deletedVerification)
+      res.status(200).send("Verification deleted successfully");
+    } catch (error) {
+      console.error("Error in handleVerificationDelete:", error);
+      res.status(500).send("Internal server error");
+    }
+  };
+}
 
 
 router.post(`/submitRecipe`, handleCreate(Recipe));
@@ -88,13 +134,18 @@ router.post(`/saveRecipe`, handleCreate(SavedRecipe));
 
 
 
+
 router.post(`/createUser`, handleCreate(User));
 router.post(`/Login`, handleCreate(User));
 router.post(`/createAdmin`, handleCreate(Admin));
-
-
-
+router.post(`/submitVerification`, handleCreate(Verification));
+router.post(`/approveUser`, handleApprove());
+router.delete(`/deleteVerificationRequest`,handleVerificationDelete());
 router.post(`/createReport`, handleCreate(ReportedUser));
+
+
+
+
 
 export default router;
 

@@ -26,6 +26,7 @@ const Profile = () => {
                                 params: { _id: recipe.user_id }, 
                             });
                             recipe.user_name = userResponse.data[0]?.username || "Unknown User"; 
+                            recipe.status = userResponse.data[0]?.status || false;
                         } catch (error) {
                             console.error("Error fetching user for recipe:", recipe._id, error);
                             recipe.user_name = "Unknown User"; 
@@ -99,7 +100,7 @@ const createdRecipes = (userRecipes, userId) => {
                         recipeName={recipe.recipe_name}
                         hours={recipe.preparation_time}
                         minutes={recipe.cooking_time}
-                        verified={recipe.verified}
+                        verified={recipe.status}
                         recipeId={recipe._id}
                         userId={recipe.user_id}
                         saves={recipe.saves}
@@ -124,7 +125,7 @@ const savedRecipes = (userRecipes) => {
                         recipeName={recipe.recipe_name}
                         hours={recipe.preparation_time}
                         minutes={recipe.cooking_time}
-                        verified={recipe.verified}
+                        verified={recipe.status}
                         recipeId={recipe._id}
                         userId={recipe.user_id}
                         saves={recipe.saves}
