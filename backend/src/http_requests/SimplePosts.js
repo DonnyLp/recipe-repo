@@ -5,7 +5,7 @@ import RecipeRating from "../schemas/recipe/RecipeRating.js";
 import User from "../schemas/account/User.js";
 import SavedRecipe from "../schemas/account/SavedRecipe.js";
 import Admin from "../schemas/account/Admin.js";
-import ReportedUser from "../schemas/report/ReportedUser.js";
+import Report from "../schemas/report/Report.js";
 import { HashPassword } from "../Util/Util.js";
 import mongoose, { mongo } from "mongoose";
 import Verification from "../schemas/account/Verification.js";
@@ -19,7 +19,8 @@ export const handleCreate = (schema) => {
       console.log(`POST ${schema.modelName}:\n${req.body}`);
       switch (schema.modelName) {
         case "Report":
-          await handleReport(data);
+          await handleReport(req);
+          req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
           break;
         case "User":
           const hashedPassword = await HashPassword(req.body.password_hash);
@@ -72,9 +73,11 @@ async function incrementSaves(recipe_id) {
 
 async function handleReport(report) {
   try {
-    const reportedUser = new ReportedUser({
-      report_id: report._id,
+    const reportedUser = new Report({
       user_id: report.body.user_id,
+      status: report.body.status,
+      recipe_id: report.body.recipe_id,
+      report_reason: report.body.report_reason
     });
     await reportedUser.save();
     console.log(`Created reportedUser:\n${reportedUser}`);
@@ -141,7 +144,7 @@ router.post(`/createAdmin`, handleCreate(Admin));
 router.post(`/submitVerification`, handleCreate(Verification));
 router.post(`/approveUser`, handleApprove());
 router.delete(`/deleteVerificationRequest`,handleVerificationDelete());
-router.post(`/createReport`, handleCreate(ReportedUser));
+router.post(`/createReport`, handleCreate(Report));
 
 
 
