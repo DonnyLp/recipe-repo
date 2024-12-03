@@ -14,6 +14,10 @@ const PostRecipeForm = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async(event, recipe_name, instructions, ingredients, cuisineType, prep_time, cook_time) => {
+        if (!user) {
+            navigate('/Login');
+            return;
+        }
         event.preventDefault();
         const recipe = {
             user_id: user._id,
@@ -26,7 +30,13 @@ const PostRecipeForm = () => {
             console.log("recipe",recipe)
 
         try {
-            const response = await axios.post('http://localhost:9000/submitRecipe', recipe);
+            const createdRecipe = await axios.post('http://localhost:9000/submitRecipe', recipe);
+            const savedRecipe = await axios.post('http://localhost:9000/saveRecipe', {
+                recipe_id: createdRecipe.data._id,
+                user_id: user._id
+            }); 
+
+            console.log(savedRecipe);
         } catch(error) {
             console.error(error);
         }

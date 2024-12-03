@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen); //opens or closes the dropdown menu
     }
 
-    const handleSearch = () => {
-        navigate(`/search?recipe_name=${searchQuery}`);
-    }
 
     return(
         <nav className="navbar navbar-light" style={{backgroundColor: '#D21F3C'}}>
@@ -23,7 +19,7 @@ export const Navbar = () => {
         </a>
         <div className="navbar-search">
             <input  className="form-control"  type="search"  placeholder="Search Recipes..."  aria-label="Search"  style={{margin: '0px 5px 0px 0px'}}  value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}   />
-                <button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={handleSearch}>Search</button>
+                <Link className="btn btn-secondary my-2 my-sm-0"  to={`/search/${searchQuery}`}></Link>
             </div>
             <div className="navbar-profile nav-item dropdown"> {/* Dropdown Menu Begin Here */}
                 <button 

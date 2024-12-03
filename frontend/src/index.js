@@ -17,6 +17,7 @@ import CommunityGuidelines from './pages/CommunityGuidelines';
 import PostRecipeForm from './pages/PostRecipeForm';
 import AdminHome from './pages/AdminHome';
 import VerifiedApplication from './pages/VerifiedApplication';
+import RecipeSearchPage from './pages/RecipeSearchPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path='/Profile' element={<Profile />}/>
       <Route path='/CommunityGuidelines' element={<CommunityGuidelines />}/>
       <Route path='/PostRecipeForm' element={<PostRecipeForm />}/>
+      <Route path='/Search/:name' element={<RecipeSearchPage />}/>
       <Route path='/AdminHome' element={<AdminHome />}/>
       <Route path='/VerifiedApplication' element={<VerifiedApplication />}/>
     </>

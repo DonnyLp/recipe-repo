@@ -30,8 +30,11 @@ export const handleCreate = (schema) => {
           req.body.preparation_time = new mongoose.Schema.Types.Number().cast(req.body.preparation_time);
           req.body.cooking_time = new mongoose.Schema.Types.Number().cast(req.body.cooking_time);
           break;
+        case "SavedRecipe":
+          req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
+          break;
       }
-      
+
       const data = new schema(req.body);
       await data.save();
 

@@ -11,13 +11,13 @@ import CommunityGuidelines from './pages/CommunityGuidelines';
 import PostRecipeForm from './pages/PostRecipeForm';
 import AdminHome from './pages/AdminHome';
 import VerifiedApplication from './pages/VerifiedApplication';
+import RecipeSearchPage from './pages/RecipeSearchPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login />}/>
-
         <Route path='/Login' element={<Login />}/>
         <Route path='/SignUp' element={<SignUp />}/>
         <Route path='/Home' element={<Home />}/>

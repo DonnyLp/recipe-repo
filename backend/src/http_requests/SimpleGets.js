@@ -91,9 +91,6 @@ const requireId = async (req, res) => {
 
 
 export const handleGetList = (schema) => {
-
-
-
   return async (req, res) => {
     try {
       console.log("GET for ", schema.constructor.name)
