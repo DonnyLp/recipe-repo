@@ -41,7 +41,15 @@ const CommunityGuidelines = () => {
                     </Accordion.Item>
                     <Accordion.Item eventKey="5">
                         <Accordion.Header>Contact Us</Accordion.Header>
-                        <Accordion.Body>Lorem Ipsum</Accordion.Body>
+                        <Accordion.Body>
+                            <p>Having technical issues? Please contact our tech team!</p>
+                            <p><b>Email:</b> rr.techsupport@gmail.com</p>
+
+                            <br/>
+
+                            <p>Want to reach out to share new ideas or collaborate?</p>
+                            <p><b>Email:</b> rr.community@gmail.com</p>
+                        </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
             </div>
