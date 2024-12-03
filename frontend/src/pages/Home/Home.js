@@ -48,6 +48,7 @@ const Home = () => {
     return(
     <>
         <Navbar />
+        <PostRecipe />
         <div class="home-container">
             <div class="recipe-posts-container">
                 {recipes.map((recipe) => {
