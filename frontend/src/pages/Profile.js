@@ -102,6 +102,7 @@ const createdRecipes = (userRecipes, userId) => {
                         verified={recipe.verified}
                         recipeId={recipe._id}
                         userId={recipe.user_id}
+                        saves={recipe.saves}
                     />
                 ))
             ) : (
@@ -126,6 +127,7 @@ const savedRecipes = (userRecipes) => {
                         verified={recipe.verified}
                         recipeId={recipe._id}
                         userId={recipe.user_id}
+                        saves={recipe.saves}
                     />
                 ))
             ) : (

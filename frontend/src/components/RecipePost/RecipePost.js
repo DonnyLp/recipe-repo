@@ -1,7 +1,8 @@
 import React from 'react';
 import './RecipePost.scss';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, userId, saves}) => {
+export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, saves}) => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
     if(!saves){
         saves = 0;
@@ -13,6 +14,9 @@ export const RecipePost = ({ userName, recipeName, hours, minutes, verified, rec
         };
         try {
             const response = await axios.post('http://localhost:9000/saveRecipe', savedRecipe);
+            if(response.status === 201){
+                saves++;
+            }
             console.log(response);
         } catch (error) {
             console.error('Error saving recipe:', error);
@@ -20,21 +24,24 @@ export const RecipePost = ({ userName, recipeName, hours, minutes, verified, rec
     }
 
     return (
-        <div className="recipe-post-container">
-            {verified && <span className="material-symbols-outlined verified-badge">verified</span>}
-            <img src="https://via.placeholder.com/150" alt="Recipe" />
-            <div className="info-container">
-                <h1>{userName}</h1>
-                <h2>{recipeName}</h2>
-                <span><strong>Time:</strong> {hours}hr {minutes} min</span>
-            </div>
-            <div className="action-container">
+        <Link to={`/Recipe/${recipeId}`}>
+            <div class="recipe-post-container">
+                {verified && <span class="material-symbols-outlined verified-badge">new_releases</span>}
+                <img src="https://via.placeholder.com/150" alt="Recipe"/>
+                <div class="info-container">
+                    <h1>{userName}</h1>
+                    <h2>{recipeName}</h2>
+                    <span><strong>Time:</strong> {hours}hr {minutes} min</span>
+                </div>
+                <div className="action-container">
                 <span className="material-symbols-outlined save-button" onClick={handleSave}>
                     bookmark
                 </span>
                 <span className="recipe-number">{saves}</span>
             </div>
-        </div>
+
+            </div>
+        </Link>
     );
     
 };

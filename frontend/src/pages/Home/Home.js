@@ -60,6 +60,7 @@ const Home = () => {
                         verified={recipe[2].verified}
                         recipeId={recipe[2]._id}
                         userId={recipe[2].user_id}
+                        saves={recipe[2].saves}
                     />
                 }
                 )}

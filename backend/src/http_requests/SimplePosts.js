@@ -33,11 +33,13 @@ export const handleCreate = (schema) => {
           break;
         case "SavedRecipe":
           req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
-          const updateRecipe = await Recipe.findOneAndUpdate(
-            {_id: req.body.recipe_id},
-            { $inc: { saves: 1 } },
-            {new: true}
-          );
+          const previousSave = await SavedRecipe.findOne({user_id: req.body.user_id, recipe_id: req.body.recipe_id});
+          if (previousSave) { 
+            console.log("Recipe already saved by user");
+            res.status(400).send("Recipe already saved by user");
+            return;
+          }
+          await incrementSaves(req.body.recipe_id);
           break;
       }
 
@@ -53,6 +55,15 @@ export const handleCreate = (schema) => {
     }
   };
 };
+
+async function incrementSaves(recipe_id) {
+  const updateRecipe = await Recipe.findOneAndUpdate(
+    {_id: recipe_id},
+    { $inc: { saves: 1 } },
+    {new: true}
+  );
+  console.log("Updated Recipe:", updateRecipe);
+}
 
 async function handleReport(report) {
   try {
