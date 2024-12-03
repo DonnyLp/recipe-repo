@@ -14,13 +14,13 @@ const Login = () => {
 
         //axios post for user verification
         try {
-            const res = await axios.post('http://localhost:9000/getUser', { username, password })
+            const res = await axios.post('http://localhost:9000/Login', { username, password })
                 .catch((err) => {
-                    alert("Error in logging in");
+                    alert(`Error in logging in: ${err}`);
                 });
-            if(res.status == 400) { //invalid username or password
+            if(res.status === 400) { //invalid username or password
                 alert("Username or Password is incorrect");
-            } else if (res.status == 202) { //Use admin login route
+            } else if (res.status === 202) { //Use admin login route
                 localStorage.clear();
                 localStorage.setItem('loggedInUser', username);
                 navigate('/AdminHome');
