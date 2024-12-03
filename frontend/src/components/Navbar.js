@@ -40,6 +40,9 @@ export const Navbar = () => {
                      <a className="dropdown-item" href="/Profile">
                           Profile
                         </a>
+                        <a className="dropdown-item" href="/VerifiedApplication">
+                            Apply for Verification
+                        </a>
                             <a className="dropdown-item" href="/CommunityGuidelines">  
                            Community Guidelines
                             </a>
