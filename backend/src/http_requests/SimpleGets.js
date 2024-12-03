@@ -44,8 +44,8 @@ export const handleGet = (schema) => {
 
 
 const isAdmin = async (user) => {
-  const admin = await Admin.findOne({user_id: user._id}).exec();
-  if (!admin) return 200; else return 202;
+  const admin = await Admin.findOne({user_id: user._id});
+  if (!admin) return 201; else return 200;
 }
 
 

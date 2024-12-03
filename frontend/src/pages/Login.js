@@ -22,7 +22,7 @@ const Login = () => {
                 });
             if(res.status === 400) { //invalid username or password
                 alert("Username or Password is incorrect");
-            } else if (res.status === 202) { //Use admin login route
+            } else if (res.status === 200) { //Use admin login route
                 localStorage.clear();
                 localStorage.setItem('loggedInUser', JSON.stringify(res.data));
                 navigate('/AdminHome');
