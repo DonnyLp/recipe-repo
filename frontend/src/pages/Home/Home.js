@@ -13,20 +13,6 @@ const Home = () => {
     const [recipes, setRecipies] = useState([]);
     const [users, setUsers] = useState([]);
 
-    const handleSave = (recipeId, userId, dispatch )  => {
-        const savedRecipe = {
-            recipe_id: recipeId,
-            user_id: userId
-        };
-        try {
-            const response = axios.post('http://localhost:9000/saveRecipe', savedRecipe);
-            console.log(response);
-        } catch (error) {
-            console.error('Error saving recipe:', error);
-        }
-        console.log(dispatch);
-    }
-
     useEffect(() => {
         const getRecipes = async () => {
             try {
@@ -72,7 +58,8 @@ const Home = () => {
                         hours={recipe[2].preperation_time} 
                         minutes={recipe[2].cooking_time}
                         verified={recipe[2].verified}
-                        onSave={(dispatch) => handleSave(recipe[2]._id, recipe[2].user_id, dispatch)}
+                        recipeId={recipe[2]._id}
+                        userId={recipe[2].user_id}
                     />
                 }
                 )}
