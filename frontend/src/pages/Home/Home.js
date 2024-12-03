@@ -13,13 +13,27 @@ const Home = () => {
     const [recipes, setRecipies] = useState([]);
     const [users, setUsers] = useState([]);
 
+    const handleSave = (recipeId, userId, dispatch )  => {
+        const savedRecipe = {
+            recipe_id: recipeId,
+            user_id: userId
+        };
+        try {
+            const response = axios.post('http://localhost:9000/saveRecipe', savedRecipe);
+            console.log(response);
+        } catch (error) {
+            console.error('Error saving recipe:', error);
+        }
+        console.log(dispatch);
+    }
+
     useEffect(() => {
         const getRecipes = async () => {
             try {
                 const response = await axios.get('http://localhost:9000/getRecipes');
                 const fetchedRecipes = response.data;
                 setRecipies(fetchedRecipes);
-
+                console.log('Fetched recipes:', fetchedRecipes);
                 const userPromises = fetchedRecipes.map(async (recipe) => {
                     try {
                         const userResponse = await axios.get('http://localhost:9000/getUsersFromRecipe', {
@@ -44,10 +58,10 @@ const Home = () => {
         getRecipes();
     }, []);
 
-
     return(
+    <>
+        <Navbar />
         <div class="home-container">
-            <Navbar />
             <PostRecipe />
             <div class="recipe-posts-container">
                 {recipes.map((recipe) => {
@@ -56,12 +70,15 @@ const Home = () => {
                         userName={recipe[2].user_name}
                         recipeName={recipe[2].recipe_name} 
                         hours={recipe[2].preperation_time} 
-                        minutes={recipe[2].cooking_time} 
+                        minutes={recipe[2].cooking_time}
+                        verified={recipe[2].verified}
+                        onSave={(dispatch) => handleSave(recipe[2]._id, recipe[2].user_id, dispatch)}
                     />
                 }
                 )}
             </div>
         </div>
+    </> 
     );
 }
 
