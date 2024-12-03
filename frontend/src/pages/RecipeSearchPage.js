@@ -10,13 +10,13 @@ const RecipeSearchPage = () => {
   console.log('Name:', name);
   useEffect(() => {
     if (name) {
-      handleSearch(name);
+      handleSearch();
     }
   }, []);
 
   
   console.log('Recipes:', recipes);
-  const handleSearch = async (recipe_name) => {
+  const handleSearch = async () => {
     try {
       const response = await axios.get(`http://localhost:9000/getRecipes`);
       setRecipes(response.data);

@@ -19,7 +19,7 @@ export const Navbar = () => {
         </a>
         <div className="navbar-search">
             <input  className="form-control"  type="search"  placeholder="Search Recipes..."  aria-label="Search"  style={{margin: '0px 5px 0px 0px'}}  value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}   />
-                <Link className="btn btn-secondary my-2 my-sm-0"  to={`/search/${searchQuery}`}></Link>
+                <Link className="btn btn-secondary my-2 my-sm-0"  to={`/search/${searchQuery}`}>Search</Link>
             </div>
             <div className="navbar-profile nav-item dropdown"> {/* Dropdown Menu Begin Here */}
                 <button 

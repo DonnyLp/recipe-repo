@@ -3,13 +3,13 @@ import './RecipePost.scss';
 import axios from 'axios';
 export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, userId}) => {
     
-    const handleSave = () => {
+    const handleSave =  async () => {
         const savedRecipe = {
             recipe_id: recipeId,
             user_id: userId
         };
         try {
-            const response = axios.post('http://localhost:9000/saveRecipe', savedRecipe);
+            const response = await axios.post('http://localhost:9000/saveRecipe', savedRecipe);
             console.log(response);
         } catch (error) {
             console.error('Error saving recipe:', error);
