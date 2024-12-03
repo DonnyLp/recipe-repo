@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
 
 const PostRecipeForm = () => {
     const [recipe_name, setRecipeName] = useState('');
@@ -43,79 +44,82 @@ const PostRecipeForm = () => {
 
     }
 
-    return(
-        <div className="loginContainer">
-            <form >
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Recipe Name"
-                        value={recipe_name}
-                        onChange={(e) => setRecipeName(e.target.value)}
-                        required
-                    />
+    return(            
+            <>
+            <Navbar />
+                <div className="loginContainer">
+                    <form >
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Recipe Name"
+                                value={recipe_name}
+                                onChange={(e) => setRecipeName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                        <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Instructions"
+                                value={instructions}
+                                onChange={(e) => setInstructions(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                        <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Ingredients"
+                                value={ingredients}
+                                onChange={(e) => setIngredients(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                        <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Cuisine Type"
+                                value={cuisineType}
+                                onChange={(e) => setCuisineType(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                        <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Preparation Time"
+                                value={prep_time}
+                                onChange={(e) => setPrepTime(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                        <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Cook Time"
+                                value={cook_time}
+                                onChange={(e) => setCookTime(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
+                            <button className="btn btn-secondary" onClick={(e) => {navigate('/Home')}}>
+                                Cancel
+                            </button>
+                            <button className="btn btn-primary" onClick={(event) => handleSubmit(event, recipe_name, instructions, ingredients, cuisineType,prep_time, cook_time)}>
+                                Submit
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Instructions"
-                        value={instructions}
-                        onChange={(e) => setInstructions(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Ingredients"
-                        value={ingredients}
-                        onChange={(e) => setIngredients(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Cuisine Type"
-                        value={cuisineType}
-                        onChange={(e) => setCuisineType(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Preparation Time"
-                        value={prep_time}
-                        onChange={(e) => setPrepTime(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Cook Time"
-                        value={cook_time}
-                        onChange={(e) => setCookTime(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                    <button className="btn btn-secondary" onClick={(e) => {navigate('/Home')}}>
-                        Cancel
-                    </button>
-                    <button className="btn btn-primary" onClick={(event) => handleSubmit(event, recipe_name, instructions, ingredients, cuisineType,prep_time, cook_time)}>
-                        Submit
-                    </button>
-                </div>
-            </form>
-        </div>
+            </>
     );
 };
 

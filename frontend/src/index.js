@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       <Route path='/CommunityGuidelines' element={<CommunityGuidelines />}/>
       <Route path='/PostRecipeForm' element={<PostRecipeForm />}/>
       <Route path='/Search/:name' element={<RecipeSearchPage />}/>
-      <Route path='/ReportRecipe' element={<ReportRecipe />}/>
+      <Route path='/ReportRecipe/:recipeId' element={<ReportRecipe />}/>
       <Route path='/AdminHome' element={<AdminHome />}/>
       <Route path='/Recipe/:recipeId' element={<Recipe />}/>
       <Route path='/VerifiedApplication' element={<VerifiedApplication />}/>

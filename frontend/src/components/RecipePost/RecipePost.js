@@ -32,24 +32,23 @@ export const RecipePost = ({ userName, recipeName, hours, minutes, verified, rec
     }
 
     return (
-        <Link to={`/Recipe/${recipeId}`}>
             <div class="recipe-post-container">
-                {verified && <span class="material-symbols-outlined verified-badge">new_releases</span>}
-                <img src={randomFood} alt="recipe" />
-                <div class="info-container">
-                    <h1>{userName}</h1>
-                    <h2>{recipeName}</h2>
-                    <span><strong>Time:</strong> {hours}hr {minutes} min</span>
-                </div>
+                <img src={randomFood} alt="Recipe"/>
+                <Link to={`/Recipe/${recipeId}`}>
+
+                        <div class="info-container">
+                            <h1>{userName} {verified && <span class="material-symbols-outlined verified-badge">new_releases</span>}</h1>
+                            <h2>{recipeName}</h2>
+                            <span><strong>Time:</strong> {hours}hr {minutes} min</span>
+                        </div>
+                </Link>
                 <div className="action-container">
                 <span className="material-symbols-outlined save-button" onClick={handleSave}>
                     bookmark
                 </span>
                 <span className="recipe-number">{saves}</span>
             </div>
-
             </div>
-        </Link>
     );
     
 };

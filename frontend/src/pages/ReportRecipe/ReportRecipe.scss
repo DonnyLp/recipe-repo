@@ -18,4 +18,10 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }
