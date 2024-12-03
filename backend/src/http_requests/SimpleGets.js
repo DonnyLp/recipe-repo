@@ -9,40 +9,86 @@ import Report from "../schemas/report/Report.js";
 import ReportedUser from "../schemas/report/ReportedUser.js";
 import ReportedRating from "../schemas/report/ReportedRating.js";
 import ReportedRecipe from "../schemas/report/ReportedRecipe.js";
+import { ComparePassword} from "../Util/Util.js";
 
 const router = express.Router();
 
 export const handleGet = (schema) => {
   return async (req, res) => {
+    console.log("GET for ", schema.modelName)
+      let data;  
     try {
-      const id = req.query._id;
-      if (!id) {
-        res.status(400).send({ message: "Missing 'id' query parameter" });
-        return;
-      }
-      const data = await schema.findById(id).exec();
-      if (!data) {
-        res.status(404).send({ message: "Data not found" });
-        return;
-      }
-      let sanitizedData = data.toObject();
       switch (schema.modelName) {
-        case "User":
-          console.log(`GET ${schema.modelName}:\n${sanitizedData.email}`);
-          delete sanitizedData.password_hash;
-          break;
         default:
-          console.log(`GET ${schema.modelName}:\n${sanitizedData}`);
+          data = await requireId(req, res);
+          if(!data) return;
+          console.log(`GET ${schema.modelName}:\n${data}`);
           break;
-      }
 
-      res.send(sanitizedData);
+        case "User":
+          console.log(req.query, req.body);
+          data = await verifyUser(req, res);
+          if(!data) return;
+          res.status(await isAdmin(data)).send(data);
+          console.log(`GET ${schema.modelName}:\n${data.username}`);
+          return;
+      }
+      res.status(201).send(data);
     } catch (error) {
       console.error("Error retrieving data: ", error);
       res.status(500).send(error);
     }
   };
 };
+
+
+
+const isAdmin = async (user) => {
+  const admin = await Admin.findOne({user_id: user._id}).exec();
+  if (!admin) return 200; else return 202;
+}
+
+
+const verifyUser = async (req, res) => {
+  const username = req.query.username;
+  const password = req.query.password;
+  if (!username || !password) {
+    res.status(400).send({ message: "Missing 'username' or 'password' query parameter" });
+    return null;
+  }
+  const user = await User.findOne({ username: username}).exec();
+  if (!user) {
+    res.status(400).send({ message: "User not found" });
+    return null;
+  }
+
+  console.log(user);
+  const match = await ComparePassword(password,user.password_hash);
+  if (!match) {
+    res.status(400).send({ message: "Incorrect password" });
+    return null
+  }
+  const sanitizedUser = user.toObject();
+  delete sanitizedUser.password_hash;
+  return sanitizedUser;
+}
+
+
+
+
+const requireId = async (req, res) => {
+  const id = req.query._id;
+  if (!id) {
+    res.status(400).send({ message: "Missing 'id' query parameter" });
+    return null;
+  }
+  const data = await schema.findById(id).exec();
+  if (!data) {
+    res.status(404).send({ message: "Data not found" });
+    return data;
+  }
+};
+
 
 export const handleGetList = (schema) => {
   return async (req, res) => {
@@ -60,6 +106,7 @@ export const handleGetList = (schema) => {
     }
   };
 };
+
 
 export const handleGetFrom = (requestedSchema, fromSchema) => {
   return async (req, res) => {

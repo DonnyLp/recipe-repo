@@ -6,20 +6,28 @@ import User from "../schemas/account/User.js";
 import SavedRecipe from "../schemas/account/SavedRecipe.js";
 import Admin from "../schemas/account/Admin.js";
 import ReportedUser from "../schemas/report/ReportedUser.js";
+import { HashPassword } from "../Util/Util.js";
+
 
 const router = express.Router();
 
 export const handleCreate = (schema) => {
   return async (req, res) => {
     try {
-      const data = new schema(req.body);
-      await data.save();
       switch (schema.modelName) {
         case "Report":
           await handleReport(data);
           break;
+        case "User":
+          const hashedPassword = await HashPassword(req.body.password_hash);
+          req.body.password_hash = hashedPassword;
+          console.log(`POST ${schema.modelName}:\n${req.body.email}`);
+          break;
       }
-      res.send(data);
+      const data = new schema(req.body);
+      await data.save();
+
+      res.status(201).send(data);
       console.log(`POST ${schema.modelName}:\n${data}`);
     } catch (error) {
       console.error(`Error in ${schema.modelName} creation:`, error);
@@ -41,12 +49,22 @@ async function handleReport(report) {
   }
 }
 
+
+
+
 router.post(`/submitRecipe`, handleCreate(Recipe));
 router.post(`/submitIngredient`, handleCreate(Ingredient));
 router.post(`/submitRating`, handleCreate(RecipeRating));
 router.post(`/saveRecipe`, handleCreate(SavedRecipe));
-router.post(`/signupUser`, handleCreate(User));
+
+
+
+router.post(`/createUser`, handleCreate(User));
+router.post(`/Login`, handleCreate(User));
 router.post(`/createAdmin`, handleCreate(Admin));
+
+
+
 router.post(`/createReport`, handleCreate(ReportedUser));
 
 export default router;

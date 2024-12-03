@@ -4,17 +4,17 @@ import axios from 'axios';
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [password_hash, setPassword] = useState('');
     const [email, setEmail] = useState('');
 
     const navigate = useNavigate();
 
-    const handleSubmit = async(event, username, password, email) => {
+    const handleSubmit = async(event, username, password_hash, email) => {
         event.preventDefault();
 
         //axios post for user signup and verification
         try {
-            const res = await axios.post('http://localhost:9000/createUser', { username, password, email })
+            const res = await axios.post('http://localhost:9000/createUser', { username, password_hash, email })
                 .catch((err) => {
                     alert("Error in signing up");
                 });
@@ -43,10 +43,10 @@ const SignUp = () => {
                 </div>
                 <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
                     <input
-                        type="password"
+                        type="password_hash"
                         className="form-control"
                         placeholder="Password"
-                        value={password}
+                        value={password_hash}
                         onChange={(e) => setPassword(e.target.value)}
                         required                        
                     />
@@ -65,7 +65,7 @@ const SignUp = () => {
                     <button 
                     type="button" 
                     class="btn btn-primary"
-                    onClick={(event) => handleSubmit(event, username, password, email)}
+                    onClick={(event) => handleSubmit(event, username, password_hash, email)}
                     >
                     Sign Up
                     </button>

@@ -6,15 +6,17 @@ import axios from 'axios';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [submited, setSubmited] = useState(false);
     
     const navigate = useNavigate();
 
     const handleSubmit = async(event, username, password) => {
         event.preventDefault();
-
+        if(submited) return;
+        setSubmited(true);
         //axios post for user verification
         try {
-            const res = await axios.post('http://localhost:9000/Login', { username, password })
+            const res = await axios.get('http://localhost:9000/getUser', { params: {username: username, password: password}})
                 .catch((err) => {
                     alert(`Error in logging in: ${err}`);
                 });
@@ -32,6 +34,9 @@ const Login = () => {
             
         } catch(err) {
             console.log(err);
+        }
+        finally {
+            setSubmited(false);
         }
     }
 
