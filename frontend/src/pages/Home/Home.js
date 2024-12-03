@@ -49,7 +49,6 @@ const Home = () => {
     <>
         <Navbar />
         <div class="home-container">
-            <PostRecipe />
             <div class="recipe-posts-container">
                 {recipes.map((recipe) => {
                     console.log('Recipe:', recipe);

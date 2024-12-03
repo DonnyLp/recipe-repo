@@ -34,6 +34,7 @@ const RecipeSearchPage = () => {
             );
             // Attach user name to the recipe
             recipe[2].user_name = userResponse.data[0]?.username || "Unknown User";
+            recipe[2].status = userResponse.data[0]?.status || false;
           } catch (error) {
             console.error("Error fetching user for recipe:", recipe._id, error);
             recipe[2].user_name = "Unknown User"; // Fallback in case of error
@@ -51,35 +52,42 @@ const RecipeSearchPage = () => {
   };
 
   return (
-    <div className="recipe-search-page">
+    <>
         <Navbar />
+    <div className="recipe-search-page">
+      <div class="recipe-posts-container">
         {recipes.filter(
             recipe =>
                 recipe[2]?.recipe_name && 
                 recipe[2].recipe_name.toLowerCase() === name.toLowerCase() 
         ).length > 0 ? (
+          <div>
+            {
             recipes
                 .filter(
                     recipe =>
                         recipe[2]?.recipe_name && 
                         recipe[2].recipe_name.toLowerCase() === name.toLowerCase() 
                 )
-                .map((recipe) => (
-                    <RecipePost
+                .map((recipe) => {
+                  return <RecipePost
                         key={recipe[2]._id} 
                         userName={recipe[2].user_name} 
                         recipeName={recipe[2].recipe_name} 
                         hours={recipe[2].hours} 
                         minutes={recipe[2].minutes} 
-                        verified={recipe[2].verified}  
+                        verified={recipe[2].status}  
                         saves={recipe[2].saves}
                         
                     />
-                ))
+                  })}
+            </div>
         ) : (
             <p>No recipes found.</p>
         )}
+        </div>
     </div>
+    </>
 );
 
 

@@ -27,7 +27,6 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' element={<Login />}/>
-
       <Route path='/Login' element={<Login />}/>
       <Route path='/SignUp' element={<SignUp />}/>
       <Route path='/Home' element={<Home />}/>
@@ -46,7 +45,9 @@ const router = createBrowserRouter(
 root.render(
   <React.StrictMode>
     <RouterProvider router = {router}>
+      <div className='body'>
       <App />
+      </div>
     </RouterProvider>
   </React.StrictMode>
 );

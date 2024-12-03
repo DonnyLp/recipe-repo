@@ -1,13 +1,26 @@
 .App {
   text-align: center;
-  width: 100vw;
-  height: 100vh;
+  background-color: black;
+}
+/* Ensure the root elements span the full page */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.body {
+  height: 100vh; /* Viewport height */
+  width: 100vw; /* Viewport width */
+  background-color: black; /* Black background */
+  display: flex; /* Optional: Use flexbox for centering content */
+  justify-content: center; /* Optional: Horizontally center content */
+  align-items: center; /* Optional: Vertically center content */
+  color: white; /* Optional: Text color for contrast */
 }
 
 .loginContainer {
   display: flex;
   justify-content: center;
-
   margin-top: 10%;
 }
 

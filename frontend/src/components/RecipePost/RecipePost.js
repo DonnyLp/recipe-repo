@@ -2,8 +2,16 @@ import React from 'react';
 import './RecipePost.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import food1 from './Food/1.jpg';
+import food2 from './Food/2.jpg';
+import food3 from './Food/3.jpg';
+import food4 from './Food/4.jpg';
+
+
 export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, saves}) => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const food = [food1, food2, food3, food4];
+    const randomFood = food[Math.floor(Math.random() * food.length)];
     if(!saves){
         saves = 0;
     }
@@ -27,7 +35,7 @@ export const RecipePost = ({ userName, recipeName, hours, minutes, verified, rec
         <Link to={`/Recipe/${recipeId}`}>
             <div class="recipe-post-container">
                 {verified && <span class="material-symbols-outlined verified-badge">new_releases</span>}
-                <img src="https://via.placeholder.com/150" alt="Recipe"/>
+                <img src={randomFood} alt="recipe" />
                 <div class="info-container">
                     <h1>{userName}</h1>
                     <h2>{recipeName}</h2>
