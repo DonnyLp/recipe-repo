@@ -31,19 +31,21 @@ export const Navbar = () => {
                     <img src="/images/user.png" width="30" height="30" alt="HomeButton" />
                 </button>
               {dropdownOpen && (
-                   <div className="dropdown-menu show" style={{position: "absolute", zIndex: 1050, left: 'auto', right: '0%'}}
-                        >
-                     <a className="dropdown-item" href="/Profile">
-                          Profile
+                   <div className="dropdown-menu show" style={{position: "absolute", zIndex: 1050, left: 'auto', right: '0%'}}>
+                        <a className="dropdown-item" href="/Home">
+                            Home
+                        </a>
+                        <a className="dropdown-item" href="/Profile">
+                            Profile
                         </a>
                         <a className="dropdown-item" href="/VerifiedApplication">
                             Apply for Verification
                         </a>
-                            <a className="dropdown-item" href="/CommunityGuidelines">  
-                           Community Guidelines
-                            </a>
-                            <div className="dropdown-divider"></div>
-                            <a className="dropdown-item" href="/Login">
+                        <a className="dropdown-item" href="/CommunityGuidelines">  
+                            Community Guidelines
+                        </a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item" href="/Login">
                             Sign Out
                         </a>
                     </div>
