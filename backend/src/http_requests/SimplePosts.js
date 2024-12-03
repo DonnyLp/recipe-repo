@@ -29,13 +29,20 @@ export const handleCreate = (schema) => {
           req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
           req.body.preparation_time = new mongoose.Schema.Types.Number().cast(req.body.preparation_time);
           req.body.cooking_time = new mongoose.Schema.Types.Number().cast(req.body.cooking_time);
+          req.body.saves = new mongoose.Schema.Types.Number().cast(0);
           break;
         case "SavedRecipe":
           req.body.date_created = new mongoose.Schema.Types.Date().cast(Date.now());
+          const updateRecipe = await Recipe.findOneAndUpdate(
+            {_id: req.body.recipe_id},
+            { $inc: { saves: 1 } },
+            {new: true}
+          );
           break;
       }
 
       const data = new schema(req.body);
+      console.log("dfffsdfsdf",data);
       await data.save();
 
       res.status(201).send(data);

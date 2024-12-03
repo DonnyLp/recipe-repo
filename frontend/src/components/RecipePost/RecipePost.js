@@ -1,8 +1,11 @@
 import React from 'react';
 import './RecipePost.scss';
 import axios from 'axios';
-export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, userId}) => {
+export const RecipePost = ({ userName, recipeName, hours, minutes, verified, recipeId, userId, saves}) => {
     const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if(!saves){
+        saves = 0;
+    }
     const handleSave =  async () => {
         const savedRecipe = {
             recipe_id: recipeId,
@@ -17,15 +20,21 @@ export const RecipePost = ({ userName, recipeName, hours, minutes, verified, rec
     }
 
     return (
-        <div class="recipe-post-container">
-            {verified && <span class="material-symbols-outlined verified-badge">verified</span>}
-            <img src="https://via.placeholder.com/150" alt="Recipe"/>
-            <div class="info-container">
+        <div className="recipe-post-container">
+            {verified && <span className="material-symbols-outlined verified-badge">verified</span>}
+            <img src="https://via.placeholder.com/150" alt="Recipe" />
+            <div className="info-container">
                 <h1>{userName}</h1>
                 <h2>{recipeName}</h2>
                 <span><strong>Time:</strong> {hours}hr {minutes} min</span>
             </div>
-            <span class="material-symbols-outlined save-button" onClick={handleSave}>bookmark</span>
+            <div className="action-container">
+                <span className="material-symbols-outlined save-button" onClick={handleSave}>
+                    bookmark
+                </span>
+                <span className="recipe-number">{saves}</span>
+            </div>
         </div>
     );
+    
 };
