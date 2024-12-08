@@ -21,7 +21,7 @@ const signOut = (event) => {
         <div className="nav-item">
             <h1>Admin Home</h1>
         </div>
-            <div className="nav-item" style={{margin: "0 5 0 0"}}> 
+            <div className="nav-item"> 
                 <button className="btn btn-secondary" onClick={(event) => {signOut(event)}}>
                     Sign Out
                 </button>
