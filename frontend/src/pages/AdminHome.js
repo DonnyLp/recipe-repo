@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Navbar } from "../components/Navbar";
+import { AdminNavbar } from "../components/AdminNavbar";
 import '../styles/Verifications.css';
 
 const AdminHome = () => {
@@ -69,9 +69,8 @@ const AdminHome = () => {
 
     return (
         <div>
-            <Navbar />
+            <AdminNavbar />
             <div className="admin-home-container">
-                <h1>Admin Home</h1>
                 <div className="users-list">
                     <h2>Users to Verify</h2>
                     {verifications.length > 0 ? (

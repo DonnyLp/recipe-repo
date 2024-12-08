@@ -60,24 +60,26 @@ const PostRecipeForm = () => {
                             />
                         </div>
                         <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                        <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Instructions"
-                                value={instructions}
-                                onChange={(e) => setInstructions(e.target.value)}
-                                required
+                            <textarea
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Instructions"
+                                    value={instructions}
+                                    onChange={(e) => setInstructions(e.target.value)}
+                                    rows="12"
+                                    required
                             />
                         </div>
                         <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
-                        <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Ingredients"
-                                value={ingredients}
-                                onChange={(e) => setIngredients(e.target.value)}
-                                required
-                            />
+                            <textarea
+                            type="text"
+                            className="form-control"
+                            placeholder="Ingredients"
+                            value={ingredients}
+                            onChange={(e) => setIngredients(e.target.value)}
+                            rows="3"
+                            required
+                             />
                         </div>
                         <div className="form-group" style={{margin: '5px 0px 5px 0px'}}>
                         <input
