@@ -59,19 +59,9 @@ const Recipe = () => {
                 >
                     Instructions
                 </button>
-                {showInstructions && <div className="section-content">{recipe.instructions}</div>}
+                {showInstructions && <div className="section-content" style={{whiteSpace: "pre-wrap"}}>{recipe.instructions}</div>}
             </div>
 
-            <div className="section">
-                <button  button
-                    className="section-header"
-                    onClick={() => setShowIngredients(!showIngredients)}
-                >
-                    Ingredients
-                </button>
-                {showIngredients && <div className="section-content">{recipe.ingredients}</div>}
-            </div>
-    
             {/* Cuisine Type*/}
             <div className="section">
             <button  
