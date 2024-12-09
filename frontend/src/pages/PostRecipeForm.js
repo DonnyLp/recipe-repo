@@ -24,6 +24,7 @@ const PostRecipeForm = () => {
             user_id: user._id,
             recipe_name: recipe_name,
             instructions: instructions,
+            ingredients: ingredients,
             cuisine_type: cuisineType,
             preparation_time: prep_time,
             cooking_time: cook_time

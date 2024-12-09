@@ -128,7 +128,7 @@ export const handleGetFrom = (requestedSchema, fromSchema) => {
               const recipeIds = savedRecipes.map(savedRecipe => savedRecipe.recipe_id);
               found_objects = await Recipe.find({ _id: { $in: recipeIds } });
               response.push(found_objects);
-              console.log("sdfsfdds",found_objects);
+              console.log("Found Posts: ", found_objects.length);
           }else{
             found_objects = await requestedSchema.findById(req.query._id);
           }
@@ -179,7 +179,24 @@ function handleGetUserById(schema) {
   };
 }
 
-
+function handleGetRecipeById(schema) {
+  return async (req, res) => {
+    try {
+      console.log(`GET for ${schema.modelName} from recipe`)
+      const recipe_id = req.query._id;
+      if (!recipe_id) {
+        res.status(400).send({ message: "Missing 'user_id' query parameter" });
+        return;
+      }
+      const foundRecipe = await schema.findById(recipe_id);
+      console.log(foundRecipe);
+      res.send(foundRecipe);
+    } catch(error) {
+      console.error("Error retrieving data: ", error);
+      res.status(500).send(error);
+    }
+  }
+}
 
 // requestedSchema is what kind of object you want and fromSchema is what object your trying to get it from
 //    for example getting all of a user's ratings would be
@@ -212,7 +229,7 @@ router.get(`/getReportedRecipeFromRating`, handleGetFrom(ReportedRecipe, Report)
 
 // not following paradigm of get requests
 router.get(`/getUserById`, handleGetUserById(User));
-
+router.get(`/getRecipeById`, handleGetRecipeById(Recipe));
 
 
 

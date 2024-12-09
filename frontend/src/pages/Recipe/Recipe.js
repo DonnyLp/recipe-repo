@@ -5,8 +5,9 @@ import { useParams, Link } from "react-router-dom";
 
 const Recipe = () => {
     const { recipeId } = useParams();
-    const [showInstructions, setShowInstructions] = useState(false);
-    const [showRecipe, setShowRecipe] = useState(true);
+    const [showInstructions, setShowInstructions] = useState(true);
+    const [showRecipe, setShowRecipe] = useState(false);
+    const [showIngredients, setShowIngredients] = useState(false);
     const [recipe, setRecipe] = useState({});
 
     useEffect(() => {
@@ -52,7 +53,7 @@ const Recipe = () => {
         <div className="collapsible-section">
             {/* Instructions */}
             <div className="section">
-                <button
+                <button  button
                     className="section-header"
                     onClick={() => setShowInstructions(!showInstructions)}
                 >
@@ -61,10 +62,19 @@ const Recipe = () => {
                 {showInstructions && <div className="section-content">{recipe.instructions}</div>}
             </div>
 
+            <div className="section">
+                <button  button
+                    className="section-header"
+                    onClick={() => setShowIngredients(!showIngredients)}
+                >
+                    Ingredients
+                </button>
+                {showIngredients && <div className="section-content">{recipe.ingredients}</div>}
+            </div>
     
             {/* Cuisine Type*/}
             <div className="section">
-            <button   button
+            <button  
                 className="section-header"
                 onClick={() => setShowRecipe(!showRecipe)}
             >

@@ -15,7 +15,7 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile';
 import CommunityGuidelines from './pages/CommunityGuidelines';
 import PostRecipeForm from './pages/PostRecipeForm';
-import AdminHome from './pages/AdminHome';
+import AdminHome from './pages/Admin/AdminHome';
 import VerifiedApplication from './pages/VerifiedApplication';
 import RecipeSearchPage from './pages/RecipeSearchPage';
 import ReportRecipe from './pages/ReportRecipe/ReportRecipe';

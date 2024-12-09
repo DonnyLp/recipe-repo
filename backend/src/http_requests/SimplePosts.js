@@ -129,6 +129,45 @@ function handleVerificationDelete() {
   };
 }
 
+function handleDeleteReport() {
+  return async(req, res) => {
+    try {
+      const deleteReport = await Report.deleteMany({_id: req.body._id}); //deletes all reports for that recipe
+
+      if(!deleteReport) {
+        return res.status(404).send("Report not found");
+      }
+
+      console.log(deleteReport);
+
+      console.log("Report deleted:", deleteReport);
+      res.status(200).send("Report deleted successfully");
+
+    } catch(error) {
+      console.error("Error in Delete Report:", error);
+      res.status(500).send("Internal server error");
+    }
+  }
+}
+
+function handleDeletePost() {
+  return async(req, res) => {
+    try {
+      const deletePost = await Recipe.deleteMany({_id: req.body._id}); //deletes post
+      const deleteSaves = await SavedRecipe.deleteMany({_id: req.body._id}); //removes the post from everyone's saved
+
+      if(!deletePost) {
+        return res.status(404).send("Post not found");
+      }
+
+
+    } catch(error) {
+      console.error("Error in Delete Post:", error);
+      res.status(500).send("Internal server error");
+    }
+  }
+}
+
 
 router.post(`/submitRecipe`, handleCreate(Recipe));
 router.post(`/submitIngredient`, handleCreate(Ingredient));
@@ -143,10 +182,11 @@ router.post(`/Login`, handleCreate(User));
 router.post(`/createAdmin`, handleCreate(Admin));
 router.post(`/submitVerification`, handleCreate(Verification));
 router.post(`/approveUser`, handleApprove());
-router.delete(`/deleteVerificationRequest`,handleVerificationDelete());
 router.post(`/createReport`, handleCreate(Report));
 
-
+router.delete(`/deleteVerificationRequest`, handleVerificationDelete());
+router.delete(`/deleteReport`, handleDeleteReport());
+router.delete(`/deletePost`, handleDeletePost());
 
 
 
