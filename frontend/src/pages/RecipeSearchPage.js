@@ -50,7 +50,7 @@ const RecipeSearchPage = () => {
       console.error("Error fetching recipes:", error);
     }
   };
-
+  
   return (
     <>
         <Navbar />
@@ -58,8 +58,9 @@ const RecipeSearchPage = () => {
       <div class="recipe-posts-container">
         {recipes.filter(
             recipe =>
-                recipe[2]?.recipe_name && 
-                recipe[2].recipe_name.toLowerCase() === name.toLowerCase() 
+                recipe[2]?.recipe_name 
+              && recipe[2].recipe_name.toLowerCase() === name.toLowerCase()
+                || recipe[2].recipe_name.toLowerCase().includes(name.toLowerCase())
         ).length > 0 ? (
           <div>
             {
@@ -68,6 +69,7 @@ const RecipeSearchPage = () => {
                     recipe =>
                         recipe[2]?.recipe_name && 
                         recipe[2].recipe_name.toLowerCase() === name.toLowerCase() 
+                || recipe[2].recipe_name.toLowerCase().includes(name.toLowerCase())
                 )
                 .map((recipe) => {
                   return <RecipePost
